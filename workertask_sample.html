@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+<div id="text"></div>
+<script src="workertask.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+function workerTask(data) {
+	function waitAsync(time) { return new Promise(function(resolve, reject) { setTimeout(resolve, time); }); }
+
+	console.log('ping received into worker, waiting a second');
+	
+	var start = Date.now();
+	while ((Date.now() - start) < 1000) { }
+	
+	//return data + ' from WORKER';
+	return waitAsync(1000).then(function() { return data + ' from WORKER'; });
+}
+
+setInterval(function() {
+	console.log('[a]');
+	document.querySelector('#text').innerText += '[a]';
+}, 500);
+
+WorkerTask.executeAsync(workerTask, 'hello world!').then(function(payload) {
+	console.log('received: ' + payload);
+	document.querySelector('#text').innerText += 'received: ' + payload;
+});
+
+</script>
+</body>
+</html>
