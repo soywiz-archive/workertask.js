@@ -23,7 +23,7 @@ setInterval(function() {
 	document.querySelector('#text').innerText += '[a]';
 }, 500);
 
-WorkerTask.executeAsync(workerTask, 'hello world!').then(function(payload) {
+WorkerTask.executeAsync(workerTask, ['hello world!']).then(function(payload) {
 	console.log('received: ' + payload);
 	document.querySelector('#text').innerText += 'received: ' + payload;
 });
